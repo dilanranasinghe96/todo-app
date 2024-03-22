@@ -6,6 +6,7 @@ import 'package:todo_app/components/custom_button.dart';
 import 'package:todo_app/components/custom_text.dart';
 import 'package:todo_app/components/custom_textfield.dart';
 import 'package:todo_app/config.dart';
+import 'package:todo_app/screens/auth/login_page.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -30,7 +31,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(regBody));
 
-      print(respose);
+      var jsonResponse = jsonDecode(respose.body);
+
+      print(jsonResponse['status']);
+
+      if (jsonResponse['status']) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginPage(),
+            ));
+      } else {
+        print('Something went wrong');
+      }
     } else {
       setState(() {
         isNotValidate = true;
