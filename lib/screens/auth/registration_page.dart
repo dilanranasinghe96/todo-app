@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:todo_app/components/custom_button.dart';
 import 'package:todo_app/components/custom_text.dart';
 import 'package:todo_app/components/custom_textfield.dart';
-import 'package:todo_app/config.dart';
 import 'package:todo_app/screens/auth/login_page.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -27,7 +26,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         "password": pwdController.text
       };
 
-      var respose = await http.post(Uri.parse(registration),
+      var respose = await http.post(
+          Uri.parse('http://192.168.56.1:3000/registration'),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(regBody));
 
@@ -35,7 +35,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
       print(jsonResponse['status']);
 
-      if (jsonResponse['status']) {
+      if (jsonResponse['status'] == true) {
         Navigator.push(
             context,
             MaterialPageRoute(
