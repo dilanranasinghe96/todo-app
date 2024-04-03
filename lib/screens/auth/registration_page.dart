@@ -19,7 +19,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController pwdController = TextEditingController();
   bool isNotValidate = false;
 
-  registerUser() async {
+  void registerUser() async {
     if (emailController.text.isNotEmpty && pwdController.text.isNotEmpty) {
       var regBody = {
         "email": emailController.text,
@@ -84,7 +84,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               textColor: Colors.black,
               bHeight: size.height * 0.06,
               bWidth: size.width * 0.5,
-              fSize: 20)
+              fSize: 20),
         ],
       ),
     );

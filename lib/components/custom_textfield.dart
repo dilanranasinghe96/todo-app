@@ -6,11 +6,11 @@ class CustomTextField extends StatefulWidget {
       this.isPassword = false,
       required this.label,
       required this.controller,
-      required this.prefix,
-      required this.errorText});
+      this.prefix,
+      this.errorText});
   bool isPassword;
   String label;
-  IconData prefix;
+  IconData? prefix;
   String? errorText;
   TextEditingController controller = TextEditingController();
 
