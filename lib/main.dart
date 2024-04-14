@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/dashboard_page.dart';
 import 'package:todo_app/screens/auth/login_page.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  //user keep login for 1h
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  runApp(MyApp(
+    token: pref.getString('token'),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final token;
+  const MyApp({super.key, required this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +26,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: token == null
+          ? const LoginPage()
+          : (JwtDecoder.isExpired(token) == false)
+              ? DashboardPage(token: token)
+              : const LoginPage(),
     );
   }
 }
